@@ -37,6 +37,10 @@ export const login = (email, password) => async (dispatch) => {
                     ? error.response.data.message
                     : error.message
         });
+        if (error.response.data.message === 'No authorization, token failed'
+            || error.response.data.message === 'No authorization, no token') {
+            logout();
+        }
     }
 };
 
@@ -73,6 +77,10 @@ export const register = (name, email, password) => async (dispatch) => {
                         : error.response.data.errors
                     : null
         });
+        if (error.response.data.message === 'No authorization, token failed'
+            || error.response.data.message === 'No authorization, no token') {
+            logout();
+        }
     }
 };
 
@@ -95,6 +103,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                     ? error.response.data.message
                     : error.message
         });
+        if (error.response.data.message === 'No authorization, token failed'
+            || error.response.data.message === 'No authorization, no token') {
+            logout();
+        }
     }
 };
 
@@ -120,5 +132,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
                     ? error.response.data.message
                     : error.message
         });
+        if (error.response.data.message === 'No authorization, token failed'
+            || error.response.data.message === 'No authorization, no token') {
+            logout();
+        }
     }
 };

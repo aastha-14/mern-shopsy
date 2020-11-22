@@ -6,9 +6,11 @@ import { logout } from '../actions/userActions';
 const Header = () => {
     const dispatch = useDispatch();
     const { userInfo } = useSelector(state => state.userLogin);
-    const [name, setName] = useState(userInfo.name);
+    const [name, setName] = useState('');
     useEffect(() => {
-        setName(userInfo.name);
+        if (userInfo) {
+            setName(userInfo.name);
+        }
     }, [userInfo]);
     const logoutHandler = () => {
         dispatch(logout());

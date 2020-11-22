@@ -4,7 +4,7 @@ import { Button, Row, Col, Form } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
-
+import { USER_UPDATE_RESET } from '../constants/userConstants';
 const ProfileScreen = ({ location, history }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -23,18 +23,18 @@ const ProfileScreen = ({ location, history }) => {
     const userUpdateProfile = useSelector(state => state.userUpdateProfile);
     const { success } = userUpdateProfile;
     useEffect(() => {
-        console.log(userInfo);
         if (!userInfo) {
             history.push('/login');
         } else {
-            if (!user) {
+            if (!user || !user.name || success) {
+                dispatch({ type: USER_UPDATE_RESET });
                 dispatch(getUserDetails('profile'));
             } else {
                 setName(user.name);
                 setEmail(user.email);
             }
         }
-    }, [dispatch, history, userInfo, user]);
+    }, [dispatch, history, userInfo, user, success]);
     const submitHandler = (e) => {
         e.preventDefault();
         if (password !== matchPassword) {
