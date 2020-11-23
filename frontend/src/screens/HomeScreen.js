@@ -20,7 +20,7 @@ const HomeScreen = () => {
             {loading
                 ? <Loader />
                 : error
-                    ? <Message variant='danger' childern={error} />
+                    ? <Message variant='danger' children={error} />
                     : <Row>
                         {products.map(product => {
                             return <Col sm={12} md={6} lg={4} xl={3} key={product._id}>

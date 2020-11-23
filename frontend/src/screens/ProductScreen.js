@@ -26,7 +26,7 @@ const ProductScreen = ({ match, history }) => {
             {loading
                 ? <Loader />
                 : error
-                    ? <Message variant='danger' childern={error} />
+                    ? <Message variant='danger' children={error} />
                     : <> <Row>
                         <Col md={6}>
                             <Image src={product.image} alt={product.name} fluid />

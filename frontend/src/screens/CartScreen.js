@@ -61,7 +61,7 @@ const CartScreen = ({ match, location, history }) => {
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
-                    : <Message childern='Your cart is empty, add something to cart.' />
+                    : <Message children='Your cart is empty, add something to cart.' />
                 }
             </Col>
             <Col md={4}>

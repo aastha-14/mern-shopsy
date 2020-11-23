@@ -46,9 +46,9 @@ const ProfileScreen = ({ location, history }) => {
     return <Row>
         <Col md={3}>
             <h2>User Profile</h2>
-            {error && <Message variant='danger' childern={error} />}
-            {message && <Message variant='danger' childern={message} />}
-            {success && <Message variant='success' childern={'Profile Updated'} />}
+            {error && <Message variant='danger' children={error} />}
+            {message && <Message variant='danger' children={message} />}
+            {success && <Message variant='success' children={'Profile Updated'} />}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
