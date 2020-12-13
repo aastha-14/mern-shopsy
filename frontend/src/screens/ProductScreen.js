@@ -29,6 +29,7 @@ const ProductScreen = ({ match, history }) => {
                     ? <Message variant='danger' children={error} />
                     : <> <Row>
                         <Col md={6}>
+                            {console.log(product.image)}
                             <Image src={product.image} alt={product.name} fluid />
                         </Col>
                         <Col md={3}>
