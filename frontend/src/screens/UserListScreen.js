@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import Message from '../components/Message';
+import Meta from '../components/Meta';
 import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions';
 
@@ -33,6 +34,7 @@ const UserListScreen = ({ history }) => {
     };
     return (
         <>
+            <Meta title='Shopsy | Users' />
             <h1>Users</h1>
             {loading
                 ? <Loader />

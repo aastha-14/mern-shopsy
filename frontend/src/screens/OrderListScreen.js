@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 import { listOrders } from '../actions/orderActions';
 
 const OrderListScreen = ({ history }) => {
@@ -25,6 +26,7 @@ const OrderListScreen = ({ history }) => {
 
     return (
         <>
+            <Meta title='Shopsy | Orders' />
             <h1>Orders</h1>
             {loading
                 ? <Loader />

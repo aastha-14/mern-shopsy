@@ -5,6 +5,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
+import Meta from '../components/Meta';
 import { listProducts, createProduct, deleteProduct } from '../actions/productActions';
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
@@ -52,6 +53,7 @@ const ProductListScreen = ({ history, match }) => {
     };
     return (
         <>
+            <Meta title='Shopsy | Products' />
             <Row className='alogn-items-center'>
                 <Col>
                     <h1>Products</h1>

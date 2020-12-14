@@ -6,6 +6,7 @@ import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import Meta from '../components/Meta';
 import { deliverOrder, getOrderDetails, payOrder } from '../actions/orderActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
@@ -80,6 +81,7 @@ function OrderScreen({ match, history }) {
                 ? (<Message variant='danger' children={error} />
                 ) : (
                     <>
+                        <Meta title='Shopsy | Order' />
                         <h1>Order {order._id}</h1>
                         <Row>
                             <Col md={8}>

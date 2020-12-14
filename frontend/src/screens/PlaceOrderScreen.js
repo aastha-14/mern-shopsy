@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
+import Meta from '../components/Meta';
 import { createOrder } from '../actions/orderActions';
 
 function PlaceOrderScreen({ history }) {
@@ -44,6 +45,7 @@ function PlaceOrderScreen({ history }) {
 
     return (
         <>
+            <Meta title='Shopsy | Place Order' />
             <CheckoutSteps step1 step2 step3 step4 />
             <Row>
                 <Col md={8}>

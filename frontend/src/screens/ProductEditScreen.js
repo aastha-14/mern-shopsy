@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 import FormContainer from '../components/FormContainer';
 import { listProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
@@ -52,7 +53,7 @@ const ProductEditScreen = ({ match, history }) => {
         }
 
     }, [product, history, dispatch, productId, successUpdate]);
-    
+
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -87,6 +88,7 @@ const ProductEditScreen = ({ match, history }) => {
     };
     return (
         <>
+            <Meta title='Shopsy | Product' />
             <Link to='/admin/productlist' className='btn btn-light my-3'>Go Back</Link>
             <FormContainer>
                 <h1>Edit product</h1>
