@@ -5,7 +5,13 @@ import Product from '../models/Product.js';
 // @route GET /api/products
 // @access Public
 const getProducts = asyncHanlder(async (req, res) => {
-    const products = await Product.find({});
+    const keyword = req.query.keyword ? {
+        name: {
+            $regex: req.query.keyword,
+            $options: 'i'
+        }
+    } : {};
+    const products = await Product.find({ ...keyword });
     return res.json(products);
 });
 
