@@ -52,6 +52,7 @@ const ProductEditScreen = ({ match, history }) => {
         }
 
     }, [product, history, dispatch, productId, successUpdate]);
+    
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
         const formData = new FormData();

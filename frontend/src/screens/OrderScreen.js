@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { getOrderDetails, payOrder } from '../actions/orderActions';
-import { ORDER_PAY_RESET } from '../constants/orderConstants';
+import { deliverOrder, getOrderDetails, payOrder } from '../actions/orderActions';
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
-function OrderScreen({ match }) {
+function OrderScreen({ match, history }) {
     const orderId = match.params.id;
     const [sdkReady, setSdkReady] = useState(false);
     const dispatch = useDispatch();
@@ -20,7 +20,17 @@ function OrderScreen({ match }) {
     const orderPay = useSelector(state => state.orderPay);
     const { success: successPay, loading: loadingPay } = orderPay;
 
+    const orderDeliver = useSelector(state => state.orderDeliver);
+    const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
+
     useEffect(() => {
+        if (!userInfo) {
+            history.push('/login');
+        }
         // adding PayPal script dynamically
         const addPayPalScript = async () => {
             const { data: clientId } = await axios.get('/api/config/paypal');
@@ -34,8 +44,9 @@ function OrderScreen({ match }) {
             script.onerror = () => { console.log('error'); };
             document.body.appendChild(script);
         };
-        if (!order || successPay || order._id !== orderId) {
+        if (!order || successPay || successDeliver || order._id !== orderId) {
             dispatch({ type: ORDER_PAY_RESET });
+            dispatch({ type: ORDER_DELIVER_RESET });
             dispatch(getOrderDetails(orderId));
         } else if (!order.isPaid) {
             if (!window.paypal) {
@@ -44,7 +55,7 @@ function OrderScreen({ match }) {
                 setSdkReady(true);
             }
         }
-    }, [dispatch, orderId, successPay, order]);
+    }, [dispatch, orderId, successPay, order, successDeliver, history, userInfo]);
 
     if (!loading && order) {
         // calculate price
@@ -56,8 +67,11 @@ function OrderScreen({ match }) {
             , 0));
     }
     const successPaymentHandler = (paymentResult) => {
-        console.log(paymentResult);
         dispatch(payOrder(orderId, paymentResult));
+    };
+
+    const deliverHandler = () => {
+        dispatch(deliverOrder(order));
     };
     return loading
         ? <Loader />
@@ -87,7 +101,7 @@ function OrderScreen({ match }) {
                                         </p>
                                         {order.isPaid
                                             ? order.isDelivered
-                                                ? <Message variant='success' children={`Paid on ${order.deliveredAt}`} />
+                                                ? <Message variant='success' children={`Delivered on ${order.deliveredAt}`} />
                                                 : <Message variant='danger' children='Not Delivered' />
                                             : <Message variant='danger' children='Complete the payment for delivery' />}
                                     </ListGroup.Item>
@@ -170,9 +184,20 @@ function OrderScreen({ match }) {
                                                             amount={order.totalPrice}
                                                             onSuccess={successPaymentHandler}
                                                         />
-                                                    )}
+                                                    )
+                                                }
                                             </ListGroup.Item>
                                         )}
+                                        {userInfo && userInfo.isAdmin
+                                            && order.isPaid
+                                            && !order.isDelivered
+                                            && (
+                                                <ListGroup.Item>
+                                                    <Button type="button" className='btn btn-block' onClick={deliverHandler}>Mark As Delivered
+                                                </Button>
+                                                </ListGroup.Item>
+                                            )
+                                        }
                                     </ListGroup>
                                 </Card>
                             </Col>
